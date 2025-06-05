@@ -15,8 +15,8 @@ export default function Home({ children }: Props) {
   const { isAuthenticated } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard"); // Redirect if already authenticated
+    if (!isAuthenticated) {
+      router.push("/signin"); // Redirect if already authenticated
     } else {
       setIsLoading(false);
     }

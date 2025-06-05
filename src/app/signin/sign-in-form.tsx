@@ -28,7 +28,7 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = (data: signInDto) => {
-    dispatch(signInAction(data));
+    dispatch(signInAction(data)).then((response: any) => {});
   };
 
   return (
