@@ -1,22 +1,22 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
-interface Props {
+interface PrivateRouteProps {
   children: React.ReactNode;
 }
 
-export default function Home({ children }: Props) {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
   const { isAuthenticated } = useSelector((state: any) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard"); // Redirect if already authenticated
+    if (!isAuthenticated) {
+      router.replace("/signin");
     } else {
       setIsLoading(false);
     }
@@ -27,4 +27,6 @@ export default function Home({ children }: Props) {
   }
 
   return <>{children}</>;
-}
+};
+
+export default PrivateRoute;

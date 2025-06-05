@@ -1,8 +1,10 @@
 "use client";
 
+import { signInAction } from "@/redux/action/authAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import zod from "zod";
 
 const signInSchema = zod.object({
@@ -16,6 +18,7 @@ type signInDto = {
 };
 
 const SignInForm = () => {
+  const dispatch = useDispatch<any>();
   const {
     reset,
     register,
@@ -25,7 +28,7 @@ const SignInForm = () => {
   } = useForm({ resolver: zodResolver(signInSchema) });
 
   const onSubmit = (data: signInDto) => {
-    console.log(data, "qfwf");
+    dispatch(signInAction(data));
   };
 
   return (

@@ -6,6 +6,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as zod from "zod";
 import tempImg from "../../../public/globe.svg";
+import { useDispatch } from "react-redux";
+import { signUpAction } from "@/redux/action/authAction";
 
 const signUpSchema = zod.object({
   email: zod.string().min(1, "EMail is required"),
@@ -22,6 +24,7 @@ const signUpSchema = zod.object({
 type SignUp = zod.infer<typeof signUpSchema>;
 
 const SignUpForm = () => {
+  const dispatch = useDispatch<any>();
   const {
     reset,
     register,
@@ -31,7 +34,18 @@ const SignUpForm = () => {
     handleSubmit,
   } = useForm({ resolver: zodResolver(signUpSchema) });
 
-  const onSubmit = (data: SignUp) => {};
+  const onSubmit = (data: SignUp) => {
+    const formData = new FormData();
+
+    for (let [key, value] of Object.entries(data)) {
+      if (key !== "profileImage") {
+        formData.append(key, value);
+      } else {
+        formData.append("avatar", value as Blob);
+      }
+    }
+    dispatch(signUpAction(formData));
+  };
 
   const selectedImage = watch("profileImage");
 

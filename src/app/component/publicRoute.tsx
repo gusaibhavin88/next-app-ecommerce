@@ -1,14 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function Home({ children }: Props) {
+export default function PublicRoute({ children }: Props) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
